@@ -30,6 +30,3 @@ def channelProcess(channel_num):
     
     print(X.range)
     return X[channel_num - 1]
-
-print(channelProcess(1))
-print(channelMap(1))
