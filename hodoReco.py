@@ -15,8 +15,8 @@ def eventThres():
     # Jackson
     return
 
-def printPair():
-    # Anyone -- but just wait
+def eventChannelInfo():
+    # Jackson
     return
 
 def main():
