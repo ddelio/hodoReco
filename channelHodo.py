@@ -5,6 +5,8 @@ def rootToChannel():
     return
 
 def channelMap(channel_num):
+#Takes in channel number (1-64) and gives back physical id
+    
     channels = ['A1','A2','A3','A4','A5','A6','A7','A8',
                 'B8','B7','B6','B5','B4','B3','B2','B1',
                 'C1','C2','C3','C4','C5','C6','C7','C8',
@@ -17,6 +19,8 @@ def channelMap(channel_num):
     return channels[channel_num - 1]
 
 def channelProcess(channel_num):
+#Takes in channel number (1-64) and gives back physical position along x/y axis
+    
     X = [-19.2, -18.6, -18.0, -17.4, -16.8, -16.2, 
          -15.6, -15.0, -14.4, -13.8, -13.2, -12.6, 
          -12.0, -11.4, -10.8, -10.2, -9.6, -9.0, 
@@ -28,5 +32,4 @@ def channelProcess(channel_num):
         15.0, 15.6, 16.2, 16.8,17.4, 18.0, 18.6, 19.2
         ]
     
-    print(X.range)
     return X[channel_num - 1]
