@@ -1,8 +1,29 @@
 import numpy as np 
 
-def rootToChannel():
+def rootToChannel(event):
     # Michael
+
+    # root grab
+    infile = ROOT.TFile(root_file, 'READ')
+    if infile.IsZombie():
+        raise RuntimeError(f"Failed to open {root_file}")
+    tree = infile.Get("EventTree")
+    if not tree:
+        raise RuntimeError("EventTree not found in file")
+
+    # event entry grab
+    evt = int(event)
+    entry_id = None
+    for i in range(tree.GetEnntries)
+        entry_id = i
+        break
+    if entry_id is None:
+        raise RuntimeError(f"Event {evt} not found.")
     return
+    tree.GetEntry(entry_id)
+
+    # load map?
+    # assign root to map
 
 def channelMap(channel_num):
 #Takes in channel number (1-64) and gives back physical id
