@@ -4,6 +4,7 @@ from hodoChannel import hodoChannel
 
 file = ROOT.TFile("something.root")
 tree = file.Get("hodoTree")
+THRESHOLD = 1200 #???
 
 def rootInspect(file, tree_name="EventTree"):
     try:
@@ -34,9 +35,24 @@ def eventProcess():
     # Michael
     return
 
-def eventThres():
-    # Jackson
-    return
+def eventThres(event, channels, threshold=THRESHOLD):
+   
+    x_hits = []
+    y_hits = []
+
+    for name in channels:
+        value = getattr(event, name)
+        if value is None:
+            continue
+
+        if value > threshold:
+            hc = hodoChannel(name)
+            if hc.isX():         # or however the hell we decide to spereate x and y 
+                x_hits.append(name)
+            else:
+                y_hits.append(name)
+
+    return x_hits, y_hits
 
 def eventChannelInfo():
     # Jackson
