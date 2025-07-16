@@ -66,9 +66,12 @@ def eventProcess():
                 event_list.append(j)
                 energies_list.append(value[j])
                 location_list.append(convertMapping(j))
+                if not event_list:
+                    continue
+                else: 
+                    print(f"---------------Event {i}--------------- \n  Channel#: {event_list} \n  Energy: {energies_list} \n  Location: {location_list}")
             else:
                 continue
-        print(f"---------------Event {i}--------------- \n  Channel#: {event_list} \n  Energy: {energies_list} \n  Location: {location_list}")
         event_list = []
 
 def main():
