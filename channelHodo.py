@@ -1,32 +1,21 @@
 import numpy as np 
 
 def rootToChannel(event):
-    # Michael
-
-    # root grab
-    infile = ROOT.TFile(root_file, 'READ')
-    if infile.IsZombie():
-        raise RuntimeError(f"Failed to open {root_file}")
-    tree = infile.Get("EventTree")
-    if not tree:
-        raise RuntimeError("EventTree not found in file")
-
-    # event entry grab
-    evt = int(event)
-    entry_id = None
-    for i in range(tree.GetEnntries)
-        entry_id = i
-        break
-    if entry_id is None:
-        raise RuntimeError(f"Event {evt} not found.")
-    return
-    tree.GetEntry(entry_id)
-
-    # load map?
-    # assign root to map
+    adc_values = ev.hodo_adc
+    channels = ev.hodo_ch
+    return [{"channel": ch, "adc": adc} for ch, adc in zip(channels, adc_values)]
 
 def channelMap(channel_num):
 #Takes in channel number (1-64) and gives back physical id
+
+    '''mapped = []
+    for entry in raw_channels:
+        ch = entry['channel']
+        adc = entry['adc']
+        plane = 'X' if ch % 2 == 0 else 'Y'
+        position = ch // 2
+        mapped.append({"plane": plane, "pos": position, "adc": adc})
+    return mapped'''
     
     channels = ['A1','A2','A3','A4','A5','A6','A7','A8',
                 'B8','B7','B6','B5','B4','B3','B2','B1',
@@ -38,9 +27,14 @@ def channelMap(channel_num):
                 'H8','H7','H6','H5','H4','H3','H2','H1'
     ]
     return channels[channel_num - 1]
+    
 
 def channelProcess(channel_num):
 #Takes in channel number (1-64) and gives back physical position along x/y axis
+    
+    '''x_hits = [c['pos'] for c in mapped_channels if c['plane'] == 'X']
+    y_hits = [c['pos'] for c in mapped_channels if c['plane'] == 'Y']
+    return [(x, y) for x in x_hits for y in y_hits]  '''
     
     X = [-19.2, -18.6, -18.0, -17.4, -16.8, -16.2, 
          -15.6, -15.0, -14.4, -13.8, -13.2, -12.6, 
