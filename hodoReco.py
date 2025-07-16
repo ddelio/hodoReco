@@ -33,8 +33,17 @@ def rootInspect(file, tree_name="EventTree"):
 
 def eventProcess():
     # Michael
-    return
 
+    all_events = []
+
+    for ev in tree:
+        raw_channels = rootToChannel(ev)
+        mapped_channels = channelMap(raw_channels)
+        clean_hits = eventThres(mapped_channels)
+        reco_hits = channelProcess(clean_hits)
+        all_events.append(reco_hits)
+
+    return all_events
 
 def eventThres(event, channels, threshold=THRESHOLD):
    
@@ -83,9 +92,23 @@ def eventChannelInfo(event, channels, threshold=THRESHOLD):
                 val = getattr(hc, attr)
                 print(f"     • {attr:15s} = {val}")
 
-
+def printPair(reco_hits):
+    for i, hit in enumerate(reco_hits):
+        print(f"Event {i}: Track candidates -> {hit}")
 
 def main():
-    # Michael
-    return
+    root_file = "/Users/elegantuniverse/hodoscope_readout/run1069_250708073015.rootd"
+    file = ROOT.TFile.Open(root_file)
+    tree = file.Get("EventTree")
 
+    print("Inspecting ROOT file...")
+    rootInspect(root_file)
+
+    print("Processing events...")
+    all_reconstructed = eventProcess(tree)
+
+    print("Printing hit pairs...")
+    printPair(all_reconstructed)
+
+if __name__ == "__main__":
+    main()
