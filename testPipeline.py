@@ -1,9 +1,14 @@
 import ROOT
 import numpy as np
+from tabulate import tabulate
+import pandas as pd
 
-root_file = "/Users/elegantuniverse/hodoscope_readout/run1069_250708073015.root"
+root_file = "/Users/elegantuniverse/hodoReco/run1069_250708073015.root"
 tree_name = "EventTree"
 threshold = 1200
+WIDTH = 4
+LENGTH = 16
+AREA = WIDTH * LENGTH
 
 print("Starting")
 
@@ -51,6 +56,28 @@ def rootInspect():
     
 def convertMapping(hit_channel):
     return channel_to_position.get(hit_channel, ("?", "?"))
+
+def numToChannel(index):
+    return channel_map[index] if 0 <= index < len(channel_map) else "?"
+
+def printMapping(hit_channels):  
+    board = [["" for _ in range(WIDTH)] for _ in range(LENGTH)]
+    for i in range(AREA):
+        row = i // 4
+        col = i % 4
+        if i in hit_channels:
+            board[row][col] = numToChannel(i)
+        else:
+            board[row][col] = "" 
+
+    table = tabulate(
+        board,
+        headers="",
+        showindex="",
+        tablefmt="fancy_grid"
+    )
+    print(table)
+            
         
 def eventProcess():
     file = ROOT.TFile.Open(root_file)
@@ -61,7 +88,7 @@ def eventProcess():
         event_list = []
         energies_list = []
         location_list = []
-        for j in range(64):
+        for j in range(AREA):
             if value[j] > threshold:
                 event_list.append(j)
                 energies_list.append(value[j])
@@ -70,6 +97,7 @@ def eventProcess():
                     continue
                 else: 
                     print(f"---------------Event {i}--------------- \n  Channel#: {event_list} \n  Energy: {energies_list} \n  Location: {location_list}")
+                    printMapping(event_list)
             else:
                 continue
         event_list = []
