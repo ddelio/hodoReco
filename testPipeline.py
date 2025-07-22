@@ -2,6 +2,7 @@ import ROOT
 import numpy as np
 from tabulate import tabulate
 import pandas as pd
+import matplotlib.pyplot as plt
 
 root_file = "/Users/elegantuniverse/hodoReco/run1069_250708073015.root"
 tree_name = "EventTree"
@@ -77,6 +78,25 @@ def printMapping(hit_channels):
         tablefmt="fancy_grid"
     )
     print(table)
+
+def makeHeatMap(hit_channels):
+    heatmap = np.zeros((LENGTH, WIDTH))
+    for i in range(AREA):
+        row = i // 4
+        col = i % 4
+        if i in hit_channels:
+            heatmap[row][col] = 1
+        else:
+            heatmap[row][col] = 0
+
+    plt.imshow(heatmap, cmap='hot', interpolation='nearest')
+    plt.colorbar(label='Hit Intensity')
+    plt.title('Hit Channel Heatmap')
+    plt.xlabel('Width')
+    plt.ylabel('Length')
+    plt.xticks(ticks=np.arange(WIDTH), labels=[f'Col {i+1}' for i in range(WIDTH)])
+    plt.yticks(ticks=np.arange(LENGTH), labels=[f'Row {i+1}' for i in range(LENGTH)])
+    plt.show()
             
         
 def eventProcess():
@@ -98,6 +118,7 @@ def eventProcess():
                 else: 
                     print(f"---------------Event {i}--------------- \n  Channel#: {event_list} \n  Energy: {energies_list} \n  Location: {location_list}")
                     printMapping(event_list)
+                    makeHeatMap(event_list)
             else:
                 continue
         event_list = []
