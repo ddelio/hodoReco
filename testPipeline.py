@@ -38,6 +38,9 @@ channel_to_row = {  1: [4,2,3,1],
                     16: [63,61,64,62]
 }
 
+corresponding_channels = {
+}
+ 
 channel_to_position = {}
 
 for col, channels in channel_to_col.items():
@@ -118,10 +121,14 @@ def eventProcess():
                 else: 
                     print(f"---------------Event {i}--------------- \n  Channel#: {event_list} \n  Energy: {energies_list} \n  Location: {location_list}")
                     printMapping(event_list)
-                    makeHeatMap(event_list)
+                    #makeHeatMap(event_list)
             else:
                 continue
         event_list = []
+
+def checkIntersection(hit_channel)
+    return corresponding_channels[hit_channel]
+
 
 def main():
     rootInspect()
